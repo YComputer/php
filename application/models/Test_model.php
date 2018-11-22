@@ -6,7 +6,7 @@ class Test_model extends CI_Model {
                 # return  array("Volvo","BMW","SAAB");
                 # $this->load->database();
                 $name = "xiaobing3";
-                $id = 8;
+                $id = 9;
 
                 // $sql = "INSERT INTO TEST (ID, NAME) VALUES (".$this->db->escape($id).", ".$this->db->escape($name).")";
                 // $this->db->query($sql);
