@@ -1,4 +1,3 @@
-
 <h1>Test data</h1>
 
 <?php
@@ -9,9 +8,6 @@
 			echo $dataItem->NAME . "<hr>";
 		}
 	}
-
-
-
 
 
 ?>

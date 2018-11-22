@@ -55,8 +55,7 @@
           <div class="row">
             <?php
             require_once "connection.php";
-            $stmt = $dbh->prepare("select * from products;");
-            // echo("<script>console.log(".json_encode($dbh).");</script>");
+            $stmt = $dbh -> prepare("select * from products;");
             $stmt -> execute();
             foreach($stmt as $row) {
               $prod_name = $row["name"];
@@ -81,7 +80,7 @@
             <!-- <div class="col-lg-4 col-md-4 col-sm-6">
               <a href="item.html">
                 <img class="img-thumbnail" src="imgs/xone-thumb.jpg" alt="Xbox-one" width="240" height="240">
-                <p>Xbox-one</p>
+                <p>Xbox-one2</p>
               </a>
               <div class="item-info">
                 <div class="item-price">$269.99</div>
@@ -126,7 +125,6 @@
                 </div>
               </div>
             </div> -->
-
           </div>
         </div>
       </div>
