@@ -55,7 +55,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </ol>
           </nav>
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6">
+
+          <?php
+
+            if($products){
+              foreach($products as $row) {
+                $prod_name = $row->name;
+                $prod_price = $row->price;
+                $prod_desc = $row->description;
+                echo
+                '<div class="col-lg-4 col-md-4 col-sm-6">
+                  <a href="item.php">
+                    <img class="img-thumbnail" src="public/imgs/ps4-thumb.jpg" alt="PS4" width="240" height="240">
+                    <p>' . $prod_name . '</p>
+                  </a>
+                  <div class="item-info">
+                    <div class="item-price">$' . $prod_price . '</div>
+                    <div class="item-add">
+                      <button class="btn-info">Add to Cart </button>
+                    </div>
+                  </div>
+                </div>';
+              }
+            }
+
+          ?>
+
+
+
+
+          
+            <!-- <div class="col-lg-4 col-md-4 col-sm-6">
               <a href="item">
                 <img class="img-thumbnail" src="./public/imgs/xone-thumb.jpg" alt="Xbox-one" width="240" height="240">
                 <p>Xbox-one</p>
@@ -102,7 +132,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <button class="btn-info">Add to Cart </button>
                 </div>
               </div>
-            </div>
+            </div> -->
+
+
+
           </div>
         </div>
       </div>
