@@ -7,6 +7,7 @@ class Home extends CI_Controller {
 	{
 		$this->load->model('home_model');
 		$products = $this->home_model->getHomeData();
+		// 打印对象方法 var_dump()
 		$this->load->view('home',['products' => $products]);
 	}
 }

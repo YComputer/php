@@ -81,9 +81,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
           ?>
 
-
-
-
           
             <!-- <div class="col-lg-4 col-md-4 col-sm-6">
               <a href="item">
@@ -92,30 +89,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </a>
               <div class="item-info">
                 <div class="item-price">$269.99</div>
-                <div class="item-add">
-                  <button class="btn-info">Add to Cart </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-              <a href="item">
-                <img class="img-thumbnail" src="./public/imgs/wii-thumb.jpg" alt="Wii" width="240" height="240">
-                <p>Wii</p>
-              </a>
-              <div class="item-info">
-                <div class="item-price">$199.99</div>
-                <div class="item-add">
-                  <button class="btn-info">Add to Cart </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-              <a href="item">
-                <img class="img-thumbnail" src="./public/imgs/switch-thumb.jpg" alt="Switch" width="240" height="240">
-                <p>Switch</p>
-              </a>
-              <div class="item-info">
-                <div class="item-price">$239.99</div>
                 <div class="item-add">
                   <button class="btn-info">Add to Cart </button>
                 </div>
