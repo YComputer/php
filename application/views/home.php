@@ -10,24 +10,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Phase 1</title>
     <link href="./public/css/bootstrap.min.css" rel="stylesheet">
     <link href="./public/css/index.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="./public/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="container-fluid">
-      <div class="page-header">
-        <h1>Phase 1</h1>
-        <div class="row">
-          <div class="dropdown col-sm-3 col-sm-offset-9 col-md-3 col-md-offset-9">
-            <button class="btn-default">Shopping Cart</button>
-            <div class="dropdown-content">
-              <!-- 渲染 -->
-              <div class="shopping-car"> </div>
-              <!-- end -->
-              <button class="btn-info checkout col-sm-6">Checkout</button>
-              <p class="col-sm-2">total:$<span class="total-product">13123</span></p>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <?php $this->load->view('header'); ?>
+
       <div class="row container-fluid product-container">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
@@ -54,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $prod_desc = $row->description;
                 echo
                 '<div class="col-lg-4 col-md-4 col-sm-6">
-                  <a href="item">
+                  <a href="item?id='. $prod_id .'">
                     <img class="img-thumbnail" src="public/imgs/ps4-thumb.jpg" alt="PS4" width="240" height="240">
                     <p>' . $prod_name . '</p>
                   </a>
@@ -76,18 +66,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
     </div>
 
-    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
-    <script src="./public/js/bootstrap.min.js"></script>
+    
     <script>
 
       var home = {
         init:function(){
           this.addProduct();//点击添加购物车
-          this.getShoppingCarData();//获取购物车数据
-          this.changeProductNum();//购物车输入框改变
-        },
-        data:{
-          // productList:[]
         },
         addProduct:function(){
           var that = this;
@@ -125,62 +109,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             arr.push(obj);
           }
           localStorage.setItem("shopCar",JSON.stringify(arr))
-          this.showShoppingCar(arr);
+          header.showShoppingCar(arr);
         },
-
-        getShoppingCarData:function(){// 刷新页面 调用
-          var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
-          this.showShoppingCar(shopingList);
-        },
-
-        showShoppingCar:function(data){// getShoppingCarData调用 + setShoppingCar调用
-          if(data.length){
-            $('.shopping-car').html('');
-          }else {
-            $('.shopping-car').html('nothing...');
-          }
-          
-          var total = 0;
-          data.forEach(function(item){
-            total += Number(item.price)*(item.num);
-            var shopHtml = `<p data-id="${item.pid}">
-                  <a href="item">${item.name}</a>
-                  <input style="min-width:50px" class="product-num" value="${item.num}" type="number" min="1" max="100"></input>
-                  <span class="price"> $${item.price}</span>
-                </p>`
-            $('.shopping-car').append($(shopHtml))
-          })
-          $('.total-product').html(total);
-        },
-
-        changeProductNum(){//改变写到locastorage中
-          $('.shopping-car').on('input','.product-num',function(){
-            // if($(this).val() > 100){
-
-            //   return
-            // }
-            var id = $(this).parent().attr('data-id');
-            var num = $(this).val() || 0;
-            var arr = JSON.parse(localStorage.getItem("shopCar")) || [];
-            function findProd(prod) { 
-              return prod.pid == id;
-            }
-            if(arr.find(findProd)){
-              arr.find(findProd).num = num;
-            }
-            localStorage.setItem("shopCar",JSON.stringify(arr))
-
-            //动态改价格
-            var total = 0;
-            arr.forEach(function(item){
-              total += Number(item.price)*(item.num);
-            })
-            $('.total-product').html(total);
-
-
-          })
-
-        }
       }
       
 
