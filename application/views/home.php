@@ -57,7 +57,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
 
           <?php
-
             if($products){
               foreach($products as $row) {
                 $prod_name = $row->name;
@@ -78,44 +77,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>';
               }
             }
-
           ?>
 
-          
-            <!-- <div class="col-lg-4 col-md-4 col-sm-6">
-              <a href="item">
-                <img class="img-thumbnail" src="./public/imgs/xone-thumb.jpg" alt="Xbox-one" width="240" height="240">
-                <p>Xbox-one</p>
-              </a>
-              <div class="item-info">
-                <div class="item-price">$269.99</div>
-                <div class="item-add">
-                  <button class="btn-info">Add to Cart </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-              <a href="item">
-                <img class="img-thumbnail" src="./public/imgs/boseqc30-thumb.jpg" alt="Switch" width="240" height="240">
-                <p>Bose QC30</p>
-              </a>
-              <div class="item-info">
-                <div class="item-price">$299.99</div>
-                <div class="item-add">
-                  <button class="btn-info">Add to Cart </button>
-                </div>
-              </div>
-            </div> -->
-
-
+          <button class="btn-info checkout" id="product_id_1">Get product detail via ajax</button>
 
           </div>
         </div>
       </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="./public/js/bootstrap.min.js"></script>
+    <script>
+            $("#product_id_1").click(function(){
+              //post the pictureID to controller and return the picture and embed it to the photoboard.
+              $.ajax({
+                  type:"post",
+                  data:{productid:1}, // data: "id=" + $(this).attr("id"),
+                  url:"./ProductAPI/ProductDetail",
+                  success: function(data){
+                    console.log('ajax data', data);
+                  },
+                  error: function() {
+                    alert("ajax error");
+                  }
+                  });
+            });
+          </script>
   </body>
 </html>
 
