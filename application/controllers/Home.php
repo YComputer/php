@@ -6,7 +6,8 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$this->load->model('home_model');
-		$dataSet = $this->home_model->getHomeData();
-		$this->load->view('home',['dataSet' => $dataSet]);
+		$products = $this->home_model->getHomeData();
+		// 打印对象方法 var_dump()
+		$this->load->view('home',['products' => $products]);
 	}
 }

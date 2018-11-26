@@ -10,16 +10,9 @@ class Home_model extends CI_Model {
 
   // 从数据库中查询数据 数据库查询构造 https://codeigniter.org.cn/user_guide/database/query_builder.html
   public function getHomeData(){
-    return  array("Volvo","BMW","SAAB");
-    # $this->load->database();
-    // $name = "xiaobing11";
-    // $id = 11;
-
-    // // $sql = "INSERT INTO TEST (ID, NAME) VALUES (".$this->db->escape($id).", ".$this->db->escape($name).")";
-    // // $this->db->query($sql);
-    // // echo $this->db->affected_rows();
-
-    // return  $this->result();
+    // return  array("Volvo","BMW","SAAB");
+    $query = $this->db->query('select * from products;');
+    return $query->result();
 
   }
 }
