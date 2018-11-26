@@ -20,7 +20,7 @@ class ProductAPI extends CI_Controller {
     	
 		$product_detail = $this->ProductById_model->get_product_detail($productid);
 		// return json_encode($product_detail);
-    	echo json_encode($product_detail);
+    	echo json_encode($product_detail[0]);
    		// if($product_detail){
    		// 	// $arr = array('username'=>$username);
 			
