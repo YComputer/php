@@ -97,6 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   url:"./ProductAPI/ProductDetail",
                   success: function(data){
                     console.log('ajax data', data);
+                    alert(data);
                   },
                   error: function() {
                     alert("ajax error");
