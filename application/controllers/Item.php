@@ -5,6 +5,8 @@ class Item extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('item');
+		$this->load->library('layout');
+		// $this->load->view('item');
+		$this->layout->view('item');
 	}
 }

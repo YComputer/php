@@ -16,11 +16,11 @@ class ProductAPI extends CI_Controller {
 	public function ProductDetail() {
 		$productid = $this->input->get_post('productid');
 		//读取model
-    	$this->load->model('ProductById_model');
+    	$this->load->model('Product_model');
     	
-		$product_detail = $this->ProductById_model->get_product_detail($productid);
+		$product_detail = $this->Product_model->get_product_detail($productid);
 		// return json_encode($product_detail);
-    	echo json_encode($product_detail[0]);
+    	echo json_encode($product_detail[0]); 
    		// if($product_detail){
    		// 	// $arr = array('username'=>$username);
 			
@@ -39,6 +39,33 @@ class ProductAPI extends CI_Controller {
    		// 	echo 'product_detail 查询失败';
    		// }	 	
     	
+	}
+
+	public function AddProduct() {
+		$post = $this->input->post();
+		$data = array(
+			'name' => $post['name'],
+			'price' => $post['price'],
+			'catid' => $post['catid'],
+			'description' => $post['description']
+			// ["file"]=> string(8) "demo.jpg"
+		);
+		$this->load->model('Product_model');
+		$product_list = $this->Product_model->add_product($data);
+		echo json_encode($product_list);
+		// var_dump($post);
+		// echo $post->;
+	}
+
+	public function DeleteProduct() {
+		$productid = $this->input->get_post('productid');
+		//读取model
+    	$this->load->model('Product_model');
+    	
+		$product_detail = $this->Product_model->delete_product($productid);
+		echo json_encode($product_detail);
+		// var_dump($post);
+		// echo $post->;
 	}
 	
 }
