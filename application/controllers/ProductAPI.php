@@ -67,6 +67,19 @@ class ProductAPI extends CI_Controller {
 		// var_dump($post);
 		// echo $post->;
 	}
+
+	public function UpdateProduct() {
+		$data = $this->input->post();
+		//读取model
+    	$this->load->model('Product_model');
+    	
+		$product_detail = $this->Product_model->update_product($data);
+		echo json_encode($product_detail);
+		// var_dump($post);
+		// echo $post->;
+	}
+
+	
 	
 }
 
