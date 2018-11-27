@@ -43,5 +43,27 @@ class Product_model extends CI_Model {
     }
   }
 
+  public function update_product($data){
+    $response = array('status'=>'0','msg'=>'failed','data'=>'');
+    $value = array(
+      'name' => $data['name'],
+      'price' => $data['price'],
+      'catid' => $data['catid'],
+      'description' => $data['description']
+    );
+    try{
+        // $query = $this->db->delete('products' , array('pid' => $productid) );
+        $query = $this->db->update('products', $value, array('pid'=> $data['pid']));
+        // $response['data'] = $query;
+        $response['status'] = '2';
+        $response['msg'] = 'success';
+        return $response;
+    }catch(PDOEXCEPTION $e){
+        echo $e->getMessage();
+    }
+  }
+
+  
+
   
 }

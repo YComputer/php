@@ -1,8 +1,8 @@
 <div class="content-wrapper">
-	<div class="alert alert-success alert-dismissible" style="position:fixed;top:0;right:0;z-index:99" role="alert">
+	<!-- <div class="alert alert-success alert-dismissible" style="position:fixed;top:0;right:0;z-index:99" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<strong>Successful operation !</strong>
-	</div>
+	</div> -->
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
@@ -101,7 +101,7 @@
                                 <td>' . $prod_price . '</td>
                                 <td>' . $prod_catgory . '</td>
                                 <td>' . $prod_desc .'</td>
-                                <td><a data-id="'. $prod_id .'" href="javascript:;">修改</a> | <a data-id="'. $prod_id .'" class="delete-products" href="javascript:;">删除</a></td>
+                                <td><a class="update-product" data-id="'. $prod_id .'" href="javascript:;">修改</a> | <a data-id="'. $prod_id .'" class="delete-products" href="javascript:;">删除</a></td>
                             </tr>
                             ';
                         }
@@ -158,6 +158,7 @@
 			// $('.alert-success').hide();
 			this.addProduct();
             this.deleteProduct();
+			this.selectProduct();
 
 			this.addCategory();//添加类别
 			this.deleteCategory();
@@ -183,21 +184,41 @@
 					values.file = 'demo.jpg';
 				}
 				// 以上是验证
-				$.ajax({
-					type: "post",
-					data: values,
-					url: "./ProductAPI/AddProduct",
-					dataType: 'json',
-					beforeSend: function() {
-						console.log('正在请求')
-					},
-					success: function(data) {
-						window.location.reload();
-					},
-					error: function() {
-						alert("ajax error");
-					}
-				});
+				if($(this).attr('data-id')){
+					values.pid = $(this).attr('data-id');
+					$.ajax({
+						type: "post",
+						data: values,
+						url: "./ProductAPI/UpdateProduct",
+						dataType: 'json',
+						beforeSend: function() {
+							console.log('正在请求')
+						},
+						success: function(data) {
+							window.location.reload();
+						},
+						error: function() {
+							alert("ajax error");
+						}
+					});
+				} else {
+					$.ajax({
+						type: "post",
+						data: values,
+						url: "./ProductAPI/AddProduct",
+						dataType: 'json',
+						beforeSend: function() {
+							console.log('正在请求')
+						},
+						success: function(data) {
+							window.location.reload();
+						},
+						error: function() {
+							alert("ajax error");
+						}
+					});
+				}
+				
 			})
 		},
         deleteProduct: function(){
@@ -224,6 +245,32 @@
 				});
 			})
         },
+		selectProduct: function(){// 查详情
+			$('#show-table').on('click', '.update-product', function() {
+				$.ajax({
+					type: "post",
+					data: {
+						productid: $(this).attr('data-id')
+					},
+					url: "./ProductAPI/ProductDetail",
+					dataType: 'json',
+					beforeSend: function() {
+						console.log('正在请求')
+					},
+					success: function(data) {
+						$('input[name="name"]').val(data.name);
+						$('input[name="price"]').val(data.price);
+						$('textarea[name="description"]').val(data.description);
+						$('select[name="catid"]').val(data.catid);
+						$('.btn-product').attr('data-id',data.pid);
+						$('.btn-product').html('reSubmit');
+					},
+					error: function() {
+						alert("ajax error");
+					}
+				});
+			})
+		},
 
 		addCategory: function(){
 			$('#add-category').on('click', '.btn-primary', function() {
@@ -304,8 +351,6 @@
 
 		selectCategory: function(){// 查详情
 			$('#show-table').on('click', '.update-category', function() {
-				
-				// 
 				$.ajax({
 					type: "post",
 					data: {
