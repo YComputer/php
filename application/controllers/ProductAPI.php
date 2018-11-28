@@ -79,6 +79,18 @@ class ProductAPI extends CI_Controller {
 		// echo $post->;
 	}
 
+	public function ChangeCatgory() {
+		$catid = $this->input->get_post('catid');
+		//读取model
+    	$this->load->model('Product_model');
+    	
+		$product_list = $this->Product_model->change_catgory($catid);
+		echo json_encode($product_list);
+		// var_dump($post);
+		// echo $post->;
+	}
+	
+
 	
 	
 }

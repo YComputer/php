@@ -108,7 +108,48 @@
 
 		selectCat:function(){
 			$('.cat-nav-sidebar').on('click','.catgory-select',function(){
-				console.log($(this).attr('data-id'))
+				$.ajax({
+					type: 'post',
+					data: {
+						catid: $(this).attr('data-id')
+					},
+					url:'./ProductAPI/ChangeCatgory',
+					dataType: "json",
+					success: function(data) {
+						// console.log(data.data,'筛选')
+						if(data.data.length){
+							var html = '';
+							data.data.forEach(function(e,i){
+								html += `
+									<div class="col-lg-4 col-md-4 col-sm-6">
+								    <a href="item?id=${e.pid}">
+								      <img class="img-thumbnail" src="public/imgs/ps4-thumb.jpg" alt="PS4" width="240" height="240">
+								      <p>${e.name}</p>
+								    </a>
+								    <div class="item-info">
+								      <div class="item-price">$${e.price}</div>
+								      <div class="item-add">
+								        <button class="btn-info add-product" data-id="${e.pid}">Add to Cart </button>
+								      </div>
+								    </div>
+								  </div>
+								`
+							})
+							$('.product-box').html(html);
+						}else {// 无数据
+							$('.product-box').html(
+								`
+									<div>
+										<p>暂无数据</p>
+									</div>
+								`)
+						}
+						// that.setShoppingCar(data);
+					},
+					error: function() {
+						alert("ajax error");
+					}
+				})
 			})
 		}
 	}

@@ -68,6 +68,24 @@ class Product_model extends CI_Model {
     }
   }
 
+  public function change_catgory($catid){
+    $response = array('status'=>'0','msg'=>'failed','data'=>'');
+    try{
+        if($catid >= 0){
+          $query = $this->db->get_where('products',array('catid'=>$catid));
+        }else {
+          $query = $this->db->get('products');
+        }
+        
+        $response['data'] = $query->result();
+        $response['status'] = '2';
+        $response['msg'] = 'success';
+        return $response;
+    }catch(PDOEXCEPTION $e){
+        echo $e->getMessage();
+    }
+  }
+  
   
 
   
