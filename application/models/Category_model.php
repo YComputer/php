@@ -11,8 +11,8 @@ class Category_model extends CI_Model {
     $response = array('status'=>'0','msg'=>'failed','data'=>'');
     try{
         // 防止 sql 注入。
-        $dataEscape = $this->db->escape($data);
-        $query = $this->db->insert( 'categories' , $dataEscape );
+        // $dataEscape = $this->db->escape($data);
+        $query = $this->db->insert( 'categories' , $data );
         // $response['data'] = $query;
         $response['status'] = '2';
         $response['msg'] = 'success';

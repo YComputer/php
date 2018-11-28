@@ -21,9 +21,9 @@ class Product_model extends CI_Model {
   public function add_product($data){
     $response = array('status'=>'0','msg'=>'failed','data'=>'');
     try{
-        // 防止 sql 注入。
-        $dataEscape = $this->db->escape($data);
-        $query = $this->db->insert( 'products' , $dataEscape );
+        // 防止 sql 注入。 需要每个字段单独拿出来判断。
+        // $dataEscape = $this->db->escape($data);
+        $query = $this->db->insert( 'products' , $data );
         // $response['data'] = $query;
         $response['status'] = '2';
         $response['msg'] = 'success';
