@@ -2,8 +2,9 @@ sqlite3 查看表结构
 select * from sqlite_master where type="table" and name="emperors";
 
 user 表
-CREATE TABLE users(uid integer primary key  autoincrement, name varchar(512) not null, pwd varchar(512) not null);
-INSERT INTO users (name, pwd) VALUES ('xiaobing', 'xiaobing');
+CREATE TABLE users(userid integer primary key  autoincrement, name varchar(512) not null, email varchar(512) not null, pwd varchar(512) not null, role integer not null);
+INSERT INTO users (name, email, pwd, role) VALUES ('admin', 'admin@admin.com', 'pwd', 0);
+INSERT INTO users (name, email, pwd, role) VALUES ('normal', 'normal@normal.com', 'pwd', 1);
 // sql 注入攻击
 $sql = "SELECT * FROM users WHERE name='{$_POST['name']}' AND pwd='{$_POST['pwd']}'";
 // 用户注入
@@ -31,3 +32,10 @@ There is also the escape() method if you prefer to run your own queries.
 
 $val1 = $this->db->escape($val1);
 $this->db->query("SELECT * FROM tablename WHERE var=$val1"); -->
+
+// https://codeigniter.com/user_guide/libraries/input.html
+// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
+
+Proper and vigorous context-dependent output sanitizations
+key words: context-dependent, context-aware, context-sensitive, Auto-Escape
+https://security.googleblog.com/2009/03/reducing-xss-by-way-of-automatic.html
