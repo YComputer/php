@@ -8,7 +8,7 @@ class Category extends CI_Controller {
     }
     
     public function AddCategory() {
-		$post = $this->input->post();
+		$post = $this->input->post(NULL, TRUE);
 		$data = array(
 			'name' => $post['cat_name'],
 		);
@@ -42,7 +42,7 @@ class Category extends CI_Controller {
     }
 
     public function UpdateCategory() {
-		$data = $this->input->post();
+		$data = $this->input->post(NULL, TRUE);
 		//读取model
     	$this->load->model('Category_model');
     	
