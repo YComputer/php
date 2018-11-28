@@ -13,7 +13,7 @@
 			<!-- The product CREATE section -->
 			<div class="col-md-6">
 				<h3> Create a product </h3>
-				<form id="add-product">
+				<form id="add-product" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Product Name</label>
 
@@ -26,8 +26,6 @@
 					<div class="form-group">
 						<label>Product Catgory</label>
 						<select class="form-control" id="prod_catid" name="catid">
-							<!-- <option value="1">test</option>
-							<option value="2" selected="true">placeholder</option> -->
 							<?php
                                 if($data['catgory']){
                                     foreach($data['catgory'] as $row) {
@@ -49,6 +47,7 @@
 					<div class="form-group">
 						<label for="prod_name">Image *</label>
 						<input type="file" name="file" class="form-control-file" id="prod_img" accept="image/jpeg" required="true">
+						<!-- <button type="button" class="upload-file">upload-pid:3</button> -->
 					</div>
 					<button type="button" class="btn btn-primary btn-product" name="reg_prod" value="Submit">Submit</button>
 				</form>
@@ -165,6 +164,7 @@
 			this.selectCategory(); //获取详情
 		},
 		addProduct: function() {
+			var that = this;
 			$('#add-product').on('click', '.btn-primary', function() {
 				var formValue = $('#add-product').serializeArray();
 				var values = {};
@@ -211,7 +211,9 @@
 							console.log('正在请求')
 						},
 						success: function(data) {
-							window.location.reload();
+							var id = data.id;
+							that.uploadFile(id);// 上传文件 
+							// window.location.reload();
 						},
 						error: function() {
 							alert("ajax error");
@@ -313,7 +315,7 @@
 							console.log('正在请求')
 						},
 						success: function(data) {
-							// console.log('请求成功')
+							// console.log('请求成功',data)
 							window.location.reload();
 						},
 						error: function() {
@@ -371,7 +373,37 @@
 					}
 				});
 			})
-		}
+		},
+
+		uploadFile:function(id){// 上传文件
+			// $('.upload-file').on('click',function(){
+				var file=$('input[name="file"]')[0].files; // files
+				
+				var formData = new FormData();
+        		formData.append("file",file[0]);
+				formData.append("name",id);
+				$.ajax({
+					type: "post",
+					data: formData,
+					url: "./Upload/do_upload",
+					processData: false,
+					contentType: false,
+					async:false,
+					cache: false,
+					dataType : 'json',
+					beforeSend: function() {
+						console.log('正在请求')
+					},
+					success: function(data) {
+						// console.log(data,111111);
+						window.location.reload();
+					},
+					error: function() {
+						alert("ajax error");
+					}
+				});
+			// })
+		}	
 	}
 
 	admin.init()

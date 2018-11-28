@@ -19,12 +19,12 @@ class Product_model extends CI_Model {
   }
 
   public function add_product($data){
-    $response = array('status'=>'0','msg'=>'failed','data'=>'');
+    $response = array('status'=>'0','msg'=>'failed','id'=>'');
     try{
         // 防止 sql 注入。 需要每个字段单独拿出来判断。
         // $dataEscape = $this->db->escape($data);
         $query = $this->db->insert( 'products' , $data );
-        // $response['data'] = $query;
+        $response['id'] = $this->db->insert_id();
         $response['status'] = '2';
         $response['msg'] = 'success';
         return $response;
@@ -68,6 +68,24 @@ class Product_model extends CI_Model {
     }
   }
 
+  public function change_catgory($catid){
+    $response = array('status'=>'0','msg'=>'failed','data'=>'');
+    try{
+        if($catid >= 0){
+          $query = $this->db->get_where('products',array('catid'=>$catid));
+        }else {
+          $query = $this->db->get('products');
+        }
+        
+        $response['data'] = $query->result();
+        $response['status'] = '2';
+        $response['msg'] = 'success';
+        return $response;
+    }catch(PDOEXCEPTION $e){
+        echo $e->getMessage();
+    }
+  }
+  
   
 
   
