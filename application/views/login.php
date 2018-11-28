@@ -1,6 +1,9 @@
 
 
 <div class="content-wrapper">
+    <?php
+        echo '<p>' . $err . '</p>';
+    ?>
     <div class="col-md-6">
         <h3> Login </h3>
         <form id="login" method="post" action="login/login">
