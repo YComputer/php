@@ -42,7 +42,9 @@ class ProductAPI extends CI_Controller {
 	}
 
 	public function AddProduct() {
-		$post = $this->input->post();
+		// https://codeigniter.com/user_guide/libraries/input.html
+		// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
+		$post = $this->input->post(NULL, TRUE);
 		$data = array(
 			'name' => $post['name'],
 			'price' => $post['price'],
@@ -69,7 +71,7 @@ class ProductAPI extends CI_Controller {
 	}
 
 	public function UpdateProduct() {
-		$data = $this->input->post();
+		$data = $this->input->post(NULL, TRUE);
 		//读取model
     	$this->load->model('Product_model');
     	
