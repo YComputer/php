@@ -26,8 +26,6 @@
 					<div class="form-group">
 						<label>Product Catgory</label>
 						<select class="form-control" id="prod_catid" name="catid">
-							<!-- <option value="1">test</option>
-							<option value="2" selected="true">placeholder</option> -->
 							<?php
                                 if($data['catgory']){
                                     foreach($data['catgory'] as $row) {

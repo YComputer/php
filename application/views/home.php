@@ -2,21 +2,24 @@
 	<?php $this->load->view('header'); ?>
 	<div class="row container-fluid product-container">
 		<div class="col-sm-3 col-md-2 sidebar">
-			<ul class="nav nav-sidebar">
+			<ul class="nav nav-sidebar cat-nav-sidebar">
 				<li class="active">
-					<a href="#">All
-						<span class="sr-only">(current)</span>
-					</a>
+					<a data-id="-1" href="javascript:;" class="catgory-select">All</a>
 				</li>
-				<li>
-					<a href="#">Headphones</a>
-				</li>
-				<li>
-					<a href="#">Game Consoles</a>
-				</li>
-				<li>
-					<a href="#">Speakers</a>
-				</li>
+			<?php
+					if($data['catgories']){
+						foreach($data['catgories'] as $row) {
+							$cat_id = $row->catid;
+							$cat_name = $row->name;
+							echo
+							'
+							<li>
+								<a data-id="' . $cat_id . '" href="javascript:;" class="catgory-select">' . $cat_name . '</a>
+							</li>
+							';
+						}
+					}
+				?>
 			</ul>
 		</div>
 		<div class="col-sm-9 col-md-10 main">
@@ -25,11 +28,11 @@
 					<li class="breadcrumb-item active" aria-current="page">Home</li>
 				</ol>
 			</nav>
-			<div class="row">
+			<div class="row product-box">
 
 				<?php
-            if($products){
-              foreach($products as $row) {
+            if($data['products']){
+              foreach($data['products'] as $row) {
                 $prod_id = $row->pid;
                 $prod_name = $row->name;
                 $prod_price = $row->price;
@@ -60,6 +63,7 @@
 	var home = {
 		init: function() {
 			this.addProduct(); //点击添加购物车
+			this.selectCat();
 		},
 		addProduct: function() {
 			var that = this;
@@ -101,6 +105,12 @@
 			localStorage.setItem("shopCar", JSON.stringify(arr))
 			header.showShoppingCar(arr);
 		},
+
+		selectCat:function(){
+			$('.cat-nav-sidebar').on('click','.catgory-select',function(){
+				console.log($(this).attr('data-id'))
+			})
+		}
 	}
 
 
