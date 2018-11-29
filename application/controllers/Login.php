@@ -45,11 +45,11 @@ class Login extends CI_Controller {
                 'httponly' => TRUE
             );
             $this->input->set_cookie($cookie);
-            // $decodeToken = $JWT->DecodeToken($jwtToken);
+            // $decodeToken = $this->objOfJwt->DecodeToken($jwtToken);
             // echo $decodeToken;
             // var_dump($_COOKIE);
 
-            $response = array('status'=>'2','msg'=>'success','data'=>$user[0],'cookie'=>$jwtToken);
+            $response = array('status'=>'2','msg'=>'success','data'=>$user[0]);
             echo json_encode($response);
             // if($user[0]->role == 0){
             //     // 跳转到 admin
