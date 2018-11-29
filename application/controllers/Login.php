@@ -30,9 +30,9 @@ class Login extends CI_Controller {
         
         if(sizeof($user)>0){
             // 登录成功构造JWT, 加上当前时间戳。
-            $token['email'] = '123123123';
-            $token['role'] = 0;
-            // $token['time'] = time();
+            $token['email'] = $user[0]->email;
+            $token['role'] = $user[0]->role;
+            $token['time'] = time();
             $jwtToken = $this->objOfJwt->GenerateToken($token);
             $cookie = array(
                 'name'  => 'auth',
