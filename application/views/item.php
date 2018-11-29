@@ -2,7 +2,7 @@
 	<?php $this->load->view('header'); ?>
 
 	<div class="row container-fluid">
-		<div class="col-sm-3 col-md-2 sidebar">
+		<!-- <div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li class="active">
 					<a href="home">All
@@ -19,15 +19,16 @@
 					<a href="home">Speakers</a>
 				</li>
 			</ul>
-		</div>
-		<div class="col-sm-9 col-md-10 main">
+		</div> -->
+		<div class="col-sm-12 col-md-12 main">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
 						<a href="home">Home</a>
 					</li>
-					<li class="breadcrumb-item">
+					<li class="breadcrumb-item category-item">
 						<a href="home">Game Console</a>
+
 					</li>
 					<li class="breadcrumb-item active" aria-current="page">PS4</li>
 				</ol>
@@ -57,26 +58,28 @@
 				url: "./ProductAPI/ProductDetail",
 				dataType: 'json',
 				success: function(data) {
-					// that.setShoppingCar(data);
 					that.data.detail = data;
 					$('.item-product').html(
 						`
-                <div class="detail-pic col-sm-6 col-md-6">
-                  <img src="./public/imgs/${data.pid}.jpeg" class="img-responsive rounded float-left" alt="PS4" max-width=400></img>
-                </div>
-                <div class="detail-info col-sm-3 col-md-3">
-                  <h3>${data.name}</h3>
-                  <div class="item-info">
-                    <div class="item-price">$${data.price}</div>
-                    <div class="item-add">
-                      <button class="btn-info add-product" data-id="${data.pid}">Add to Cart </button>
-                    </div>
-                  </div>
-                  <h4 class="item-desc">Description</h4>
-                  <p>${data.description}</p>
-                </div>
-              `
+							<div class="detail-pic col-sm-6 col-md-6">
+								<img src="./public/imgs/${data.pid}.jpeg" class="img-responsive rounded float-left" alt="PS4" max-width=400></img>
+							</div>
+							<div class="detail-info col-sm-3 col-md-3">
+								<h3>${data.name}</h3>
+								<div class="item-info">
+									<div class="item-price">$${data.price}</div>
+									<div class="item-add">
+									<button class="btn-info add-product" data-id="${data.pid}">Add to Cart </button>
+									</div>
+								</div>
+								<h4 class="item-desc">Description</h4>
+								<p>${data.description}</p>
+							</div>
+						`
 					)
+					// $('.breadcrumb').find('.category-item').html(`
+					// 	<a href="home">category-id:${data.catid}</a>
+					// `)
 				},
 				error: function() {
 					alert("ajax error");

@@ -123,7 +123,7 @@
 								html += `
 									<div class="col-lg-4 col-md-4 col-sm-6">
 								    <a href="item?id=${e.pid}">
-								      <img class="img-thumbnail" src="public/imgs/ps4-thumb.jpg" alt="PS4" width="240" height="240">
+								      <img class="img-thumbnail" src="public/imgs/${e.pid}.jpeg" alt="PS4" width="240" height="240">
 								      <p>${e.name}</p>
 								    </a>
 								    <div class="item-info">
