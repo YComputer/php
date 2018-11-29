@@ -19,6 +19,7 @@ class Login extends CI_Controller {
     public function Login() {
         $this->load->helper('url');
         $this->load->library('layout');
+        // $this->output->set_header('Access-Control-Allow-Credentials:true');
 		// https://codeigniter.com/user_guide/libraries/input.html
 		// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
 		$post = $this->input->post(NULL, TRUE);
@@ -31,15 +32,24 @@ class Login extends CI_Controller {
             // 登录成功构造JWT, 加上当前时间戳。
             $token['email'] = $user[0]->email;
             $token['role'] = $user[0]->role;
-            // $token['time'] = time();
+            $token['time'] = time();
             $jwtToken = $this->objOfJwt->GenerateToken($token);
-            // printf($jwtToken);
-            $this->input->set_cookie("auth", $jwtToken, 60*60*24*3, NULL, NULL, NULL, NULL, TRUE);
+            $cookie = array(
+                'name'  => 'auth',
+                'value' => $jwtToken,
+                'expire' => 60*60*24*3,
+                'path' => NULL,
+                'domain' => NULL,
+                'secure' => FALSE,
+                'prefix' => NULL,
+                'httponly' => TRUE
+            );
+            $this->input->set_cookie($cookie);
             // $decodeToken = $JWT->DecodeToken($jwtToken);
             // echo $decodeToken;
+            // var_dump($_COOKIE);
 
-
-            $response = array('status'=>'2','msg'=>'success','data'=>$user[0]);
+            $response = array('status'=>'2','msg'=>'success','data'=>$user[0],'cookie'=>$jwtToken);
             echo json_encode($response);
             // if($user[0]->role == 0){
             //     // 跳转到 admin

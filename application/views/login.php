@@ -40,14 +40,16 @@
                     data: values,
                     url: "./Login/Login",
                     dataType: 'json',
+                    // xhrFields: { withCredentials: true },
                     success: function(data) {
-                        if(data.data.role == 0){
-                            window.location.href = window.location.href.split('login')[1]+'admin';
-                        } else if(data.data.role == 1) {
-                            window.location.href = window.location.href.split('login')[1]+'home';
-                        }else {
-                            alert('email or pwd error')
-                        }
+                        console.log(window.cookie)
+                        // if(data.data.role == 0){
+                        //     window.location.href = window.location.href.split('login')[1]+'admin';
+                        // } else if(data.data.role == 1) {
+                        //     window.location.href = window.location.href.split('login')[1]+'home';
+                        // }else {
+                        //     alert('email or pwd error')
+                        // }
                     },
                     error: function() {
                         alert("ajax error");

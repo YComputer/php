@@ -14,5 +14,6 @@ class Admin extends CI_Controller {
 		// var_dump($product,$catgory)
 		// $this->load->view('home',['products' => $products]);
 		$this->layout->view('admin',['data' => $data]);
+		
 	}
 }
