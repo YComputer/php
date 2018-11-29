@@ -80,6 +80,7 @@ class Product_model extends CI_Model {
         $response['data'] = $query->result();
         $response['status'] = '2';
         $response['msg'] = 'success';
+        // $response['cookie'] = $_COOKIE;
         return $response;
     }catch(PDOEXCEPTION $e){
         echo $e->getMessage();
