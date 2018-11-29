@@ -1,13 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require APPPATH . '/libraries/ImplementJwt.php';
+
 class Login extends CI_Controller {
     public function __construct(){
-    	parent::__construct();
+        parent::__construct();
+        $this->objOfJwt = new ImplementJwt();
     }
     
 	public function index(){
         $this->load->helper('url');
+        $this->load->helper('cookie');
         $this->load->library('layout');
         $this->layout->view('login');
     }
@@ -24,6 +28,17 @@ class Login extends CI_Controller {
         $response = array('status'=>'0','msg'=>'failed','data'=>'');
         
         if(sizeof($user)>0){
+            // 登录成功构造JWT, 加上当前时间戳。
+            $token['email'] = $user[0]->email;
+            $token['role'] = $user[0]->role;
+            // $token['time'] = time();
+            $jwtToken = $this->objOfJwt->GenerateToken($token);
+            // printf($jwtToken);
+            $this->input->set_cookie("auth", $jwtToken, 60*60*24*3, NULL, NULL, NULL, NULL, TRUE);
+            // $decodeToken = $JWT->DecodeToken($jwtToken);
+            // echo $decodeToken;
+
+
             $response = array('status'=>'2','msg'=>'success','data'=>$user[0]);
             echo json_encode($response);
             // if($user[0]->role == 0){
