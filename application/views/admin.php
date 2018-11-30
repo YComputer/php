@@ -191,6 +191,7 @@
 						data: values,
 						url: "./ProductAPI/UpdateProduct",
 						dataType: 'json',
+						
 						beforeSend: function() {
 							console.log('正在请求')
 						},

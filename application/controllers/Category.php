@@ -8,15 +8,17 @@ class Category extends CI_Controller {
     }
     
     public function AddCategory() {
-		$post = $this->input->post(NULL, TRUE);
-		$data = array(
-			'name' => $post['cat_name'],
-		);
-		$this->load->model('Category_model');
-		$category_list = $this->Category_model->add_category($data);
-		echo json_encode($category_list);
-		// var_dump($post);
-		// echo $post->;
+			session_start();
+			$post = $this->input->post(NULL, TRUE);
+			$data = array(
+				'name' => $post['cat_name'],
+			);
+			$nonces = $_SESSION['nonces'];
+			$this->load->model('Category_model');
+			$category_list = $this->Category_model->add_category($data, $nonces);
+			echo json_encode($category_list);
+			// var_dump($post);
+			// echo $post->;
     }
 
     public function DeleteCategory() {

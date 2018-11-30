@@ -6,7 +6,8 @@ class ProductAPI extends CI_Controller {
  
   public function __construct()
 	{
-    	parent::__construct();
+		parent::__construct();
+		
 	}
  
 	public function index()
@@ -42,18 +43,20 @@ class ProductAPI extends CI_Controller {
 	}
 
 	public function AddProduct() {
+		session_start();
 		// https://codeigniter.com/user_guide/libraries/input.html
 		// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
 		$post = $this->input->post(NULL, TRUE);
+
 		$data = array(
 			'name' => $post['name'],
 			'price' => $post['price'],
 			'catid' => $post['catid'],
 			'description' => $post['description']
-			// ["file"]=> string(8) "demo.jpg"
 		);
+		$nonces = $_SESSION['nonces'];
 		$this->load->model('Product_model');
-		$product_list = $this->Product_model->add_product($data);
+		$product_list = $this->Product_model->add_product($data,$nonces);
 		echo json_encode($product_list);
 		// var_dump($post);
 		// echo $post->;

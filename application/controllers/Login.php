@@ -7,6 +7,7 @@ class Login extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->objOfJwt = new ImplementJwt();
+        $this->load->helper('cookie');
     }
     
 	public function index(){
@@ -19,6 +20,7 @@ class Login extends CI_Controller {
     public function Login() {
         $this->load->helper('url');
         $this->load->library('layout');
+        session_start();
         // $this->output->set_header('Access-Control-Allow-Credentials:true');
 		// https://codeigniter.com/user_guide/libraries/input.html
 		// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
@@ -44,29 +46,33 @@ class Login extends CI_Controller {
                 'prefix' => NULL,
                 'httponly' => TRUE
             );
+            // set cookie + set session
             $this->input->set_cookie($cookie);
+            $_SESSION['nonces'] = md5(rand(1,10000)); 
             // $decodeToken = $this->objOfJwt->DecodeToken($jwtToken);
             // echo $decodeToken;
             // var_dump($_COOKIE);
 
             $response = array('status'=>'2','msg'=>'success','data'=>$user[0]);
             echo json_encode($response);
-            // if($user[0]->role == 0){
-            //     // 跳转到 admin
-            //     // redirect('http://47.98.195.42/php/admin', 'location');
-
-            // }else{
-            //     // 跳转到首页
-            //     // redirect('http://47.104.15.106/home');
-            //     // redirect('http://47.98.195.42/php/home', 'location');
-            // }
         }else{
             $response = array('status'=>'0','msg'=>'failed','data'=>$user);
             // echo json_encode($user);
             // $this->layout->view('item');
             echo json_encode($response);
+        } 	
+    }
+    
+    public function LogOut() {
+        session_start();
+        $response = array('status'=>'0','msg'=>'failed');
+        try {
+            $response = array('status'=>'2','msg'=>'success');
+            unset($_SESSION['nonces']);
+            delete_cookie('auth');
+            echo json_encode($response);
+        }catch(PDOEXCEPTION $e){
+            echo $e->getMessage();
         }
-        
-		
-	}
+    }
 }
