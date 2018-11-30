@@ -18,16 +18,22 @@ class Product_model extends CI_Model {
     }
   }
 
-  public function add_product($data){
+  public function add_product($data, $nonces){
+    // session_start();
     $response = array('status'=>'0','msg'=>'failed','id'=>'');
     try{
         // 防止 sql 注入。 需要每个字段单独拿出来判断。
         // $dataEscape = $this->db->escape($data);
-        $query = $this->db->insert( 'products' , $data );
-        $response['id'] = $this->db->insert_id();
-        $response['status'] = '2';
-        $response['msg'] = 'success';
-        return $response;
+        // Apply and validate secret nonces for every form
+        if(isset($nonces) && $nonces == $_SESSION['nonces']){
+          $query = $this->db->insert( 'products' , $data );
+          $response['id'] = $this->db->insert_id();
+          $response['status'] = '2';
+          $response['msg'] = 'success';
+          return $response;
+        }else {
+          echo 'error';
+        }
     }catch(PDOEXCEPTION $e){
         echo $e->getMessage();
     }

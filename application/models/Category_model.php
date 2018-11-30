@@ -7,16 +7,20 @@ class Category_model extends CI_Model {
   }
   
 
-  public function add_category($data){
+  public function add_category($data, $nonces){
     $response = array('status'=>'0','msg'=>'failed','data'=>'');
     try{
         // 防止 sql 注入。
         // $dataEscape = $this->db->escape($data);
-        $query = $this->db->insert( 'categories' , $data );
-        // $response['data'] = $query;
-        $response['status'] = '2';
-        $response['msg'] = 'success';
-        return $response;
+        if(isset($nonces) && $nonces == $_SESSION['nonces']){
+            $query = $this->db->insert( 'categories' , $data );
+            // $response['data'] = $query;
+            $response['status'] = '2';
+            $response['msg'] = 'success';
+            return $response;
+        }else {
+            echo 'error';
+        }
     }catch(PDOEXCEPTION $e){
         echo $e->getMessage();
     }

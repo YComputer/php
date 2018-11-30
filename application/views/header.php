@@ -2,10 +2,27 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-<div class="page-header">
-    <h1>Phase 1</h1>
-    <div class="row">
-        <div class="dropdown col-sm-3 col-sm-offset-9 col-md-3 col-md-offset-9">
+<div class="row page-header" >
+    <h1 class="col-md-4">Phase 1</h1>
+    <div class="col-md-2 col-sm-3" style="border:1px solid #ccc; padding:20px 0; border-radius:10px; text-align:center">
+      <?php
+					if($data){
+            echo 
+            '
+              <p>' . $data['email'] . '</p>
+              <button type="button" class="logOut">signOut</button>
+            ';
+          } else {
+            echo 
+            '
+              <p>guest</p>
+              <button type="button" class="logIn">logIn</button>
+            ';
+          }
+				?>
+    </div>
+    <div class="col-md-6 col-sm-9">
+        <div class="dropdown col-sm-offset-7 col-md-3 col-md-offset-4">
         <button class="btn-default">Shopping Cart</button>
         <div class="dropdown-content">
             <!-- 渲染 -->
@@ -22,6 +39,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         init:function(){
             this.getShoppingCarData();
             this.changeProductNum();
+            this.logOut();
+            this.logIn();
         },
         getShoppingCarData:function(){
             var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
@@ -68,9 +87,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $('.total-product').html(total);
           })
 
+        },
+
+        logOut(){
+          $('.page-header').on('click', '.logOut', function(){
+            $.ajax({
+              type: "post",
+              data: {},
+              url: "./Login/LogOut",
+              dataType: 'json',
+              success: function(data) {
+                // that.setShoppingCar(data);
+                if(data.status == 2){
+                  alert('logOut');
+                  window.location.reload();
+                }
+              },
+              error: function() {
+                alert("ajax error");
+              }
+            });
+          })
+        },
+
+        logIn(){
+          $('.page-header').on('click', '.logIn', function(){
+            var url = window.location.href;
+            if(url.indexOf('home')>0){
+              window.location.href = url.split('home')[0]+'login'
+            }else {
+              window.location.href = url.split('item')[0]+'login'
+            }
+          })
         }
-
-
 
     }
     header.init();

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<?php $this->load->view('header'); ?>
+	<?php $this->load->view('header',['data' => $data['user']]); ?>
 	<div class="row container-fluid product-container">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar cat-nav-sidebar">
