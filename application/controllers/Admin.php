@@ -20,8 +20,10 @@ class Admin extends CI_Controller {
 				$this->load->model('admin_model');
 				$product = $this->admin_model->getProductData();
 				$catgory = $this->admin_model->getCatgoryData();
+				$user = $this->admin_model->getUserData();
 				$data['products'] = $product;
 				$data['catgory'] = $catgory;
+				$data['user'] = $user;
 				// var_dump($product,$catgory)
 				// $this->load->view('home',['products' => $products]);
 				

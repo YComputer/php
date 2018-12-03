@@ -22,4 +22,11 @@ class Admin_model extends CI_Model {
     return $query->result();
 
   }
+
+  public function getUserData(){
+    // return  array("Volvo","BMW","SAAB");
+    $query = $this->db->query('select * from users;');
+    return $query->result();
+
+  }
 }

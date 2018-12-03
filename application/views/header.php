@@ -17,6 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             '
               <p>guest</p>
               <button type="button" class="logIn">logIn</button>
+              <button type="button" class="logIn">signUp</button>
             ';
           }
 				?>
@@ -119,8 +120,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               window.location.href = url.split('item')[0]+'login'
             }
           })
-        }
 
+        },
+        
     }
     header.init();
 </script>
