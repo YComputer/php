@@ -3,35 +3,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="row page-header" >
-    <h1 class="col-md-4">Phase 1</h1>
-    <div class="col-md-2 col-sm-3" style="border:1px solid #ccc; padding:20px 0; border-radius:10px; text-align:center">
-      <?php
+    <h1 class="col-xs-12 col-sm-4 col-md-3 header-title">SALE</h1>
+    <div class="col-xs-12 col-sm-4 col-md-4 header-item-box" >
+      <a href="home">HOME</a>
+      <a href="admin">ADMIN</a>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-2 header-user-info">
+      
+        <?php
 					if($data){
             echo 
             '
               <p>' . $data['email'] . '</p>
-              <button type="button" class="logOut">signOut</button>
+              <button type="button" class="logOut btn-info">signOut</button>
             ';
           } else {
             echo 
             '
               <p>guest</p>
-              <button type="button" class="logIn">logIn</button>
-              <button type="button" class="logIn">signUp</button>
+              <button type="button" class="logIn btn-primary">logIn</button>
+              <button type="button" class="logIn btn-success">signUp</button>
             ';
           }
-				?>
+        ?>
     </div>
-    <div class="col-md-6 col-sm-9">
-        <div class="dropdown col-sm-offset-7 col-md-3 col-md-offset-4">
-        <button class="btn-default">Shopping Cart</button>
-        <div class="dropdown-content">
-            <!-- 渲染 -->
-            <div class="shopping-car"> </div>
-            <!-- end -->
-            <button class="btn-info checkout col-sm-6">Checkout</button>
-            <p class="col-sm-2">total:$<span class="total-product">0</span></p>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 header-shopping">
+        <div class="dropdown">
+          <!--  col-sm-offset-7 col-md-12 col-md-offset-4 -->
+          <button class="btn-default btn-shopping">Shopping Cart</button>
+          <div class="dropdown-content">
+              <!-- 渲染 -->
+              <div class="shopping-car"></div>
+              <!-- end -->
+              <button class="btn-info checkout col-sm-6">Checkout</button>
+              <p class="col-sm-2">total:$<span class="total-product">0</span></p>
+          </div>
         </div>
     </div>
 </div>

@@ -32,7 +32,7 @@ class Admin extends CI_Controller {
 				echo '你不是管理员';
 			}
 		}else {
-			echo '请登录';
+			echo '请<a href="login">登录</a> <a href="home">Home</a>';
 		}
 		// var_dump($user);
 		
