@@ -70,7 +70,7 @@
 	<!-- /.container-fluid-->
 </div>
 
-<div id="show-table">
+<div id="show-table" class="container-fluid">
 	<div class="product-table col-md-6">
 		<table class="table table-hover">
 			<thead>
@@ -140,7 +140,47 @@
 		</table>
 		
 	</div>
+	<div class="user-table col-md-6 table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>userid</th>
+					<th>name</th>
+					<th>email</th>
+					<th>pwd</th>
+					<th>role</th>
+				</tr>
+			</thead>
+			<tbody class="category-tbody">
+				<?php
+				if($data['user']){
+					foreach($data['user'] as $row) {
+						$user_id = $row->userid;
+						$user_name = $row->name;
+						$user_email = $row->email;
+						$user_pwd = $row->pwd;
+						$user_role = $row->role;
+						echo 
+						'
+						<tr>
+							<td>' . $user_id . '</td>
+							<td>' . $user_name . '</td>
+							<td>' . $user_email . '</td>
+							<td>' . $user_pwd . '</td>
+							<td>' . $user_role . '</td>
+						</tr>
+						';
+					}
+				}
+			?>
+			</tbody>
+
+		</table>
+	</div>
 </div>
+
+
+
 
 <!-- /.content-wrapper-->
 <footer class="sticky-footer">
