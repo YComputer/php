@@ -42,3 +42,5 @@ https://security.googleblog.com/2009/03/reducing-xss-by-way-of-automatic.html
 
 
 注意修改：application/conrollers/Upload.php 中静态的文件存储路径。
+
+xss 和 sql 注入 警告
