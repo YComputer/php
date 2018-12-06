@@ -1,10 +1,17 @@
 sqlite3 查看表结构
 select * from sqlite_master where type="table" and name="emperors";
 
-user 表
+users 表
 CREATE TABLE users(userid integer primary key  autoincrement, name varchar(512) not null, email varchar(512) not null, pwd varchar(512) not null, role integer not null);
 INSERT INTO users (name, email, pwd, role) VALUES ('admin', 'admin@admin.com', 'pwd', 0);
 INSERT INTO users (name, email, pwd, role) VALUES ('normal', 'normal@normal.com', 'pwd', 1);
+
+orders 表
+pid用-分割，qty也用-分割，123-456；1-2；表示购买的产品pid是123和456，数量分别是1个和两个。status，表示这个订单状态。0 未支付，1支付成功。
+CREATE TABLE orders(orderid integer primary key  autoincrement, pid varchar(512) not null, qty varchar(512) not null, userid integer not null, hash varchar(512) not null, status integer not null);
+INSERT INTO orders (pid, qty, userid, hash, status) VALUES ('1-2', '1-1', 1, 'product hash', 1);
+
+
 // sql 注入攻击
 $sql = "SELECT * FROM users WHERE name='{$_POST['name']}' AND pwd='{$_POST['pwd']}'";
 // 用户注入
@@ -42,3 +49,5 @@ https://security.googleblog.com/2009/03/reducing-xss-by-way-of-automatic.html
 
 
 注意修改：application/conrollers/Upload.php 中静态的文件存储路径。
+
+xss 和 sql 注入 警告
