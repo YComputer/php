@@ -1,8 +1,4 @@
 <div class="content-wrapper">
-	<!-- <div class="alert alert-success alert-dismissible" style="position:fixed;top:0;right:0;z-index:99" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<strong>Successful operation !</strong>
-	</div> -->
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
@@ -168,6 +164,46 @@
 							<td>' . $user_email . '</td>
 							<td>' . $user_pwd . '</td>
 							<td>' . $user_role . '</td>
+						</tr>
+						';
+					}
+				}
+			?>
+			</tbody>
+
+		</table>
+	</div>
+	<div class="orders-table col-md-6">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>orderid</th>
+					<th>pid</th>
+					<th>qty</th>
+					<th>userid</th>
+					<th>hash</th>
+					<th>status</th>
+				</tr>
+			</thead>
+			<tbody class="orders-tbody">
+				<?php
+				if($data['orders']){
+					foreach($data['orders'] as $row) {
+						$orders_orderid = $row->orderid;
+						$orders_pid = $row->pid;
+						$orders_qty = $row->qty;
+						$orders_userid = $row->userid;
+						$orders_hash = $row->hash;
+						$orders_status = $row->status;
+						echo 
+						'
+						<tr>
+							<td>' . $orders_orderid . '</td>
+							<td>' . $orders_pid . '</td>
+							<td>' . $orders_qty . '</td>
+							<td>' . $orders_userid . '</td>
+							<td>' . $orders_hash . '</td>
+							<td>' . $orders_status . '</td>
 						</tr>
 						';
 					}

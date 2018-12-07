@@ -29,4 +29,11 @@ class Admin_model extends CI_Model {
     return $query->result();
 
   }
+
+  public function getOrdersData(){
+    // return  array("Volvo","BMW","SAAB");
+    $query = $this->db->query('select * from orders;');
+    return $query->result();
+
+  }
 }
