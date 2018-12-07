@@ -33,6 +33,7 @@ class Login extends CI_Controller {
 
             if($user['status'] == 2){
                 // 登录成功构造JWT, 加上当前时间戳。
+                $token['userid'] = $user['data']->userid;
                 $token['email'] = $user['data']->email;
                 $token['role'] = $user['data']->role;
                 $token['time'] = time();

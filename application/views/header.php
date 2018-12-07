@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<div class="pay-loading">
+  <div class="loading-spinner"></div>
+</div>
 
 <div class="row page-header" >
     <h1 class="col-xs-12 col-sm-4 col-md-3 header-title">SALE</h1>
@@ -14,7 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if($data){
             echo 
             '
-              <p>' . $data['email'] . '</p>
+              <p>
+                <a href="myOrder" class="user-info" data-id=' . $data['userid'] . '>' . $data['email'] . '</a>
+              </p>
               <button type="button" class="logOut btn-info">signOut</button>
             ';
           } else {
@@ -35,10 +40,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <!-- 渲染 -->
               <div class="shopping-car"></div>
               <!-- end -->
-              <button class="btn-info checkout col-sm-6">Checkout</button>
+              <?php
+                if($data){
+                  echo 
+                  '
+                    <button class="btn-info checkout col-sm-6">Checkout</button>
+                  ';
+                } else {
+                  echo 
+                  '
+                    <button class="btn-info signIn-checkout col-sm-6">Checkout</button>
+                  ';
+                }
+              ?>
               <p class="col-sm-2">total:$<span class="total-product">0</span></p>
           </div>
         </div>
+    </div>
+
+    <div class="paypal-form" style="display:none">
     </div>
 </div>
 <script>
@@ -48,6 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             this.changeProductNum();
             this.logOut();
             this.logIn();
+            this.checkout();
         },
         getShoppingCarData:function(){
             var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
@@ -64,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           data.forEach(function(item){
             total += Number(item.price)*(item.num);
             var shopHtml = `<p data-id="${item.pid}">
-                  <a href="item">${item.name}</a>
+                  <a href="item?id=${item.pid}">${item.name}</a>
                   <input style="min-width:50px" class="product-num" value="${item.num}" type="number" min="1" max="100"></input>
                   <span class="price"> $${item.price}</span>
                 </p>`
@@ -74,6 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         },
         
         changeProductNum(){//改变写到locastorage中
+          var that = this;
           $('.shopping-car').on('input','.product-num',function(){
             var id = $(this).parent().attr('data-id');
             var num = $(this).val() || 0;
@@ -128,6 +150,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           })
 
         },
+
+        checkout(){
+          var that = this;
+          $('.header-shopping').on('click', '.signIn-checkout', function(){
+            alert('暂未登录')
+          })
+
+          $('.header-shopping').on('click', '.checkout', function(){
+            var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
+            // var userId = $('.header-user-info').find('.user-info').attr('data-id');
+            var pidArr = [];
+            var qtyArr = [];
+            var total = 0;
+            shopingList.forEach(function(e,i){
+              pidArr.push(e.pid);
+              qtyArr.push(e.num);
+              total += Number(e.price)*(e.num);
+            })
+            $.ajax({
+              type: "post",
+              data: {
+                pid: pidArr.join('-'),
+                qty: qtyArr.join('-')
+              },
+              url: "./Orders/CreateOrder",
+              dataType: 'json',
+              beforeSend: function() {
+                $('.pay-loading').show();
+                // console.log(123123)
+              },
+              success: function(data) {
+                if(data.status == 2){
+                  $('.paypal-form').html(
+                  `
+                  <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_cart">
+                    <input type="hidden" name="upload" value="1">
+                    <input type="hidden" name="business" value="thea-facilitator@163.com">
+
+                    <input type="hidden" name="item_name_1" value=${data.data.pid}>
+                    <input type="hidden" name="amount_1" value="${total.toFixed(2)}">
+                    
+                    <input class="submit" type="submit" value="PayPal">
+                    <input type="hidden" name="return" value="http://47.98.195.42/php/myOrder">
+                  </form>
+                  `)
+
+                  setTimeout(function(){
+                    $('.paypal-form').find('.submit').click();
+                  }, 50);
+
+                }
+                
+              },
+              error: function() {
+                alert("ajax error");
+              }
+            });
+          })
+        }
         
     }
     header.init();
