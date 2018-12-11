@@ -42,7 +42,7 @@
 					</div>
 					<div class="form-group">
 						<label for="prod_name">Image *</label>
-						<input type="file" name="file" class="form-control-file" id="prod_img" accept="image/jpeg" required="true">
+						<input type="file" name="file" class="form-control-file" accept="image/jpeg, image/jpg, image/png" id="prod_img"  required="true">
 						<!-- <button type="button" class="upload-file">upload-pid:3</button> -->
 					</div>
 					<button type="button" class="btn btn-primary btn-product" name="reg_prod" value="Submit">Submit</button>
@@ -473,10 +473,14 @@
 					},
 					success: function(data) {
 						// console.log(data,111111);
-						window.location.reload();
+						if(data.error == 0){
+							window.location.reload();
+						}else{
+							alert(data.msg);
+						}
 					},
-					error: function() {
-						alert("ajax error");
+					error: function(err) {
+						alert("uploadFile ajax error", err);
 					}
 				});
 			// })
