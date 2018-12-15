@@ -62,7 +62,7 @@
 					$('.item-product').html(
 						`
 							<div class="detail-pic col-sm-6 col-md-6">
-								<img src="./public/imgs/${data.pid}.jpeg" class="img-responsive rounded float-left" alt="PS4" max-width=400></img>
+								<img src="./public/imgs/${data.pid}-thumb.jpg" class="img-responsive rounded float-left" alt="PS4" max-width=400></img>
 							</div>
 							<div class="detail-info col-sm-3 col-md-3">
 								<h3>${data.name}</h3>
