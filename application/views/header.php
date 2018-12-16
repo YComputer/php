@@ -41,17 +41,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="shopping-car"></div>
               <!-- end -->
               <?php
-                if($data){
+                // if($data){
                   echo 
                   '
                     <button class="btn-info checkout col-sm-6">Checkout</button>
                   ';
-                } else {
-                  echo 
-                  '
-                    <button class="btn-info signIn-checkout col-sm-6">Checkout</button>
-                  ';
-                }
+                // } else {
+                //   echo 
+                //   '
+                //     <button class="btn-info signIn-checkout col-sm-6">Checkout</button>
+                //   ';
+                // }
               ?>
               <p class="col-sm-2">total:$<span class="total-product">0</span></p>
           </div>
@@ -180,6 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $('.pay-loading').show();
                 // console.log(123123)
               },
+
               success: function(data) {
                 if(data.status == 2){
                   $('.paypal-form').html(
@@ -205,7 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
               },
               error: function() {
-                alert("ajax error");
+                alert("ajax error!!!!!!!!!!!!!!");
               }
             });
           })
