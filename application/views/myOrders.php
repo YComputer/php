@@ -9,6 +9,7 @@
                         <tr>
                             <th>pid</th>
                             <th>qty</th>
+							<th>userid</th>
                             <th>hash</th>
                             <th>status</th>
                         </tr>
@@ -19,7 +20,7 @@
                             foreach($data['orders'] as $row) {
                                 $orders_pid = $row->pid;
                                 $orders_qty = $row->qty;
-                                // $orders_userid = $row->userid;
+                                $orders_userid = $row->userid;
                                 $orders_hash = $row->hash;
 								$orders_status = $row->status;
 								
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td>' . $orders_pid . '</td>
 									<td>' . $orders_qty . '</td>
+									<td>' . $orders_userid . '</td>
                                     <td>' . $orders_hash . '</td>
                                     <td>' . $status[$orders_status] . '</td>
                                 </tr>
