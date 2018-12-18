@@ -12,6 +12,7 @@
                 <label>Pwd</label>
                 <input id="pwd" type="password" class="form-control" name="pwd">
             </div>
+            <input id="nonces" type="hidden" name="nonces" value="<?=$_SESSION['nonces']?>">
             <button type="button" class="btn btn-primary btn-login" >Login</button>
             <button type="button" class="btn btn-primary btn-signUp" >SignUp</button>
         </form>

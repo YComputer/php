@@ -54,12 +54,12 @@ class ProductAPI extends CI_Controller {
 			'catid' => $post['catid'],
 			'description' => $post['description']
 		);
-		$nonces = $_SESSION['nonces'];
-		$this->load->model('Product_model');
-		$product_list = $this->Product_model->add_product($data,$nonces);
-		echo json_encode($product_list);
-		// var_dump($post);
-		// echo $post->;
+		if ($_SESSION['nonces']==$post['nonces']) {
+			$this->load->model('Product_model');
+			$product_list = $this->Product_model->add_product($data);
+			echo json_encode($product_list);
+		}
+
 	}
 
 	public function DeleteProduct() {

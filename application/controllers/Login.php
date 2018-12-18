@@ -11,6 +11,11 @@ class Login extends CI_Controller {
     }
     
 	public function index(){
+        // CREATE A RANDOM SESSION TOKEN
+        session_start();
+        $length = 32;
+        $_SESSION['nonces'] = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+
         $this->load->helper('url');
         $this->load->helper('cookie');
         $this->load->library('layout');
@@ -50,13 +55,14 @@ class Login extends CI_Controller {
                 );
                 // set cookie + set session
                 $this->input->set_cookie($cookie);
-                $_SESSION['nonces'] = md5(rand(1,10000)); 
-                // $decodeToken = $this->objOfJwt->DecodeToken($jwtToken);
-                // echo $decodeToken;
-                // var_dump($_COOKIE);
-    
-                $response = array('status'=>'2','msg'=>'success','data'=>$user['data']);
-                echo json_encode($response);
+                if ($_SESSION['nonces']==$post['nonces']) {
+                    // VALID TOKEN PROVIDED - PROCEED WITH PROCESS
+                    $response = array('status'=>'2','msg'=>'success','data'=>$user['data']);
+                    echo json_encode($response);
+                  } else {
+                    $response = array('status'=>'0','msg'=>'failed','data'=>'nonces error');
+                    echo json_encode($response);
+                  }
             }else {
                 $response = array('status'=>'0','msg'=>'failed','data'=>'pwd or email error');
                 echo json_encode($response);

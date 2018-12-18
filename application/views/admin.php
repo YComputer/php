@@ -45,6 +45,7 @@
 						<input type="file" name="file" class="form-control-file" accept="image/jpeg, image/jpg, image/png" id="prod_img"  required="true">
 						<!-- <button type="button" class="upload-file">upload-pid:3</button> -->
 					</div>
+					<input id="nonces" type="hidden" name="nonces" value="<?=$_SESSION['nonces']?>">
 					<button type="button" class="btn btn-primary btn-product" name="reg_prod" value="Submit">Submit</button>
 				</form>
 			</div>
@@ -57,6 +58,7 @@
 						<label>Category Name</label>
 						<input id="cat_name" type="text" class="form-control" name="cat_name" pattern="^[\w\- ]+$" required>
 					</div>
+					<input id="nonces" type="hidden" name="nonces" value="<?=$_SESSION['nonces']?>">
 					<button type="button" class="btn btn-primary btn-category" name="reg_prod" value="Submit">Submit</button>
 				</form>
 			</div>

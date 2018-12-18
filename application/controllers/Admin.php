@@ -10,8 +10,12 @@ class Admin extends CI_Controller {
         $this->objOfJwt = new ImplementJwt();
     }
 
-	public function index()
-	{
+	public function index(){
+        // CREATE A RANDOM SESSION TOKEN
+        session_start();
+        $length = 32;
+		$_SESSION['nonces'] = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+		
 		if(isset($_COOKIE['auth'])){
 			$decodeToken = $this->objOfJwt->DecodeToken($_COOKIE['auth']);
 			$user = $decodeToken;
