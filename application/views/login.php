@@ -12,6 +12,10 @@
                 <label>Pwd</label>
                 <input id="pwd" type="password" class="form-control" name="pwd">
             </div>
+            <div class="form-group">
+                <label>CAPTCHA: <?=$_SESSION['captcha']?></label>
+                <input id="captcha" type="text" class="form-control" name="captcha" >
+            </div>
             <input id="nonces" type="hidden" name="nonces" value="<?=$_SESSION['nonces']?>">
             <button type="button" class="btn btn-primary btn-login" >Login</button>
             <button type="button" class="btn btn-primary btn-signUp" >SignUp</button>
@@ -57,7 +61,7 @@
                                 window.location.href = window.location.href.split('login')[1]+'home';
                             }
                         }else {
-                            alert('email or pwd error')
+                            alert('error: '+data.data);
                         }
                     },
                     error: function() {

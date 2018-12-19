@@ -15,6 +15,7 @@ class Login extends CI_Controller {
         session_start();
         $length = 32;
         $_SESSION['nonces'] = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+        $_SESSION['captcha'] = rand(1000,9999);
 
         $this->load->helper('url');
         $this->load->helper('cookie');
@@ -31,11 +32,12 @@ class Login extends CI_Controller {
 		// https://codeigniter.com/user_guide/libraries/input.html
 		// To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
 		$post = $this->input->post(NULL, TRUE);
-		$this->load->model('Login_model');
-        $user = $this->Login_model->login($post['email'], $post['pwd']);
-        // $url = current_url();
-        $response = array('status'=>'0','msg'=>'failed','data'=>'');
-
+        $this->load->model('Login_model');
+        
+        if ($_SESSION['captcha']==$post['captcha'] && $_SESSION['nonces']==$post['nonces'] && $this->input->get_request_header('login-custom-header', TRUE)=='login-csrf') {
+            $user = $this->Login_model->login($post['email'], $post['pwd']);
+            // $url = current_url();
+            $response = array('status'=>'0','msg'=>'failed','data'=>'');
             if($user['status'] == 2){
                 // 登录成功构造JWT, 加上当前时间戳。
                 $token['userid'] = $user['data']->userid;
@@ -55,18 +57,17 @@ class Login extends CI_Controller {
                 );
                 // set cookie + set session
                 $this->input->set_cookie($cookie);
-                if ($_SESSION['nonces']==$post['nonces'] && $this->input->get_request_header('login-custom-header', TRUE)=='login-csrf') {
-                    // VALID TOKEN PROVIDED - PROCEED WITH PROCESS
-                    $response = array('status'=>'2','msg'=>'success','data'=>$user['data']);
-                    echo json_encode($response);
-                  } else {
-                    $response = array('status'=>'0','msg'=>'failed','data'=>'nonces error or login-custom-header error');
-                    echo json_encode($response);
-                  }
+                // VALID TOKEN PROVIDED - PROCEED WITH PROCESS
+                $response = array('status'=>'2','msg'=>'success','data'=>$user['data']);
+                echo json_encode($response);
             }else {
                 $response = array('status'=>'0','msg'=>'failed','data'=>'pwd or email error');
                 echo json_encode($response);
-            }	
+            }
+        }else{
+            $response = array('status'=>'0','msg'=>'failed','data'=>'captcha error or nonces error or login-custom-header error');
+            echo json_encode($response);
+        }
         
     }
 
