@@ -73,6 +73,9 @@ class Product_model extends CI_Model {
     $response = array('status'=>'0','msg'=>'failed','data'=>'');
     try{
         if($catid >= 0){
+          // sql injection 测试代码
+          // $query = $this->db->get_where('products',array('catid'=>"1"));
+          // $query = $this->db->get_where('products',array('catid'=>"1' or '1'='1"));
           $query = $this->db->get_where('products',array('catid'=>$catid));
         }else {
           $query = $this->db->get('products');

@@ -153,9 +153,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         checkout(){
           var that = this;
-          $('.header-shopping').on('click', '.signIn-checkout', function(){
-            alert('暂未登录')
-          })
+          // $('.header-shopping').on('click', '.signIn-checkout', function(){
+          //   alert('暂未登录')
+          // })
 
           $('.header-shopping').on('click', '.checkout', function(){
             var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
@@ -181,8 +181,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 // console.log(123123)
               },
 
-              success: function(data) {
-                if(data.status == 2){
+              success: function(response) {
+                console.log('-===', response);
+                var qty = response.data.qty.split('-');
+                var price = response.data.price.split('-');
+                console.log(qty, price);
+                var total = 0.0;
+                if(qty.length == price.length){
+                    qty.forEach(function(e, i){
+                    total = total + e * price[i];
+                  });
+                }
+                console.log('total',parseFloat(total.toPrecision(12)));
+                if(response.status == 2){
                   $('.paypal-form').html(
                   `
                   <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
@@ -190,8 +201,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <input type="hidden" name="upload" value="1">
                     <input type="hidden" name="business" value="thea-facilitator@163.com">
 
-                    <input type="hidden" name="item_name_1" value=${data.data.pid}>
-                    <input type="hidden" name="amount_1" value="${total.toFixed(2)}">
+                    <input type="hidden" name="item_name_1" value=${response.data.pid}>
+                    <input type="hidden" name="amount_1" value="${total}">
                     
                     <input class="submit" type="submit" value="PayPal">
                     <input type="hidden" name="return" value="http://47.98.195.42/php/myOrder">

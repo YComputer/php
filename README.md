@@ -13,6 +13,12 @@ INSERT INTO orders (pid, qty, userid, hash, status) VALUES ('1-2', '1-1', 1, 'pr
 
 
 // sql 注入攻击
+// 恒真恒假测试
+'and'1'='2
+'and'1'='1
+' or '1'='1
+
+//登录距离
 $sql = "SELECT * FROM users WHERE name='{$_POST['name']}' AND pwd='{$_POST['pwd']}'";
 // 用户注入
 $_POST['user'] = 'john';
