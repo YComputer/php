@@ -95,10 +95,10 @@
 		setShoppingCar: function(data) { //在 addProduct 中调用
 			var arr = JSON.parse(localStorage.getItem("shopCar")) || [];
 			var obj = {
-				name: data.name,
+				// name: data.name,
 				num: 1,
 				pid: data.pid,
-				price: data.price,
+				// price: data.price,
 			}
 			// 有重复的，num+1;否则扔进arr最后
 			function findProd(prod) {
@@ -110,7 +110,20 @@
 				arr.push(obj);
 			}
 			localStorage.setItem("shopCar", JSON.stringify(arr))
-			header.showShoppingCar(arr);
+			$.ajax({
+				type: "post",
+				data: {
+				list: arr
+				},
+				url: "./ProductAPI/GetProducts",
+				dataType: 'json',
+				success: function(data) {
+				header.showShoppingCar(data,arr);
+				},
+				error: function() {
+				alert("ajax error");
+				}
+			});
 		},
 		getQueryVariable(variable) {
 			var query = window.location.search.substring(1);

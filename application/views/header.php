@@ -71,10 +71,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             this.checkout();
         },
         getShoppingCarData:function(){
+          var that = this;
             var shopingList = JSON.parse(localStorage.getItem("shopCar")) || [];
-            this.showShoppingCar(shopingList);
+            // console.log(shopingList)
+            $.ajax({
+              type: "post",
+              data: {
+                list: shopingList
+              },
+              url: "./ProductAPI/GetProducts",
+              dataType: 'json',
+              success: function(data) {
+                that.showShoppingCar(data,shopingList);
+              },
+              error: function() {
+                alert("ajax error");
+              }
+            });
+            
         },
-        showShoppingCar:function(data){// getShoppingCarData调用 + setShoppingCar调用
+        showShoppingCar:function(data,numlist){// getShoppingCarData调用 + setShoppingCar调用
           if(data.length){
             $('.shopping-car').html('');
           }else {
@@ -82,16 +98,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           }
           
           var total = 0;
-          data.forEach(function(item){
-            total += Number(item.price)*(item.num);
+          data.forEach(function(item, i){
+            total += Number(item.price)*(numlist[i].num);
             var shopHtml = `<p data-id="${item.pid}">
-                  <a href="item?id=${item.pid}">${item.name}</a>
-                  <input style="min-width:50px" class="product-num" value="${item.num}" type="number" min="1" max="100"></input>
+                  <a href=" ">${item.name}</a >
+                  <input style="min-width:50px" class="product-num" value="${numlist[i].num}" type="number" min="1" max="100"></input>
                   <span class="price"> $${item.price}</span>
-                </p>`
+                </p >`
             $('.shopping-car').append($(shopHtml))
           })
-          $('.total-product').html(total);
+          $('.total-product').html(parseFloat(total.toPrecision(12)));
         },
         
         changeProductNum(){//改变写到locastorage中
@@ -110,10 +126,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             //动态改价格
             var total = 0;
-            arr.forEach(function(item){
-              total += Number(item.price)*(item.num);
+            // arr.forEach(function(item){
+            //   total += Number(item.price)*(item.num);
+            // })
+            $('.shopping-car').find('p').each(function(i,e){
+              var num = $(e).find('input').val()
+              var price = $(e).find('.price').html().split('$')[1];
+              total += num * price;
+              
             })
-            $('.total-product').html(total);
+            $('.total-product').html(parseFloat(total.toPrecision(12)));
           })
 
         },
@@ -192,6 +214,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     total = total + e * price[i];
                   });
                 }
+                total = parseFloat(total.toPrecision(12));
                 console.log('total',parseFloat(total.toPrecision(12)));
                 if(response.status == 2){
                   $('.paypal-form').html(

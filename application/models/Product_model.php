@@ -91,7 +91,18 @@ class Product_model extends CI_Model {
     }
   }
   
-  
+  public function get_products($pids, $pnum){
+    try{
+        $Pids =  implode(",",$pids);
+        $sql = "SELECT * FROM products WHERE pid In ($Pids)";
+        // // use query bindings to prevent against injection.
+        $query = $this->db->query($sql);
+        return $query->result();
+        // var_dump($query->result());
+    }catch(PDOEXCEPTION $e){
+        echo $e->getMessage();
+    }
+  }
 
   
 }

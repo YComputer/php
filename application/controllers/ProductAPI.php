@@ -96,7 +96,24 @@ class ProductAPI extends CI_Controller {
 	}
 	
 
-	
+	public function GetProducts() {
+		$productid = $this->input->get_post('list');
+		//读取model
+		$pids = array();
+		$pnum = array();
+		$this->load->model('Product_model');
+		if(!empty($productid)){
+		 foreach ($productid as $value){
+		  array_push($pids, $value['pid']);
+		  array_push($pnum, $value['num']);
+		 }
+		 $product_detail = $this->Product_model->get_products($pids, $pnum);
+		} else {
+		 $product_detail = $this->Product_model->get_products($pids, $pnum);
+		};
+		   echo json_encode($product_detail);    
+		   
+	   }
 	
 }
 
