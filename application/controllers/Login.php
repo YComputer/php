@@ -55,12 +55,12 @@ class Login extends CI_Controller {
                 );
                 // set cookie + set session
                 $this->input->set_cookie($cookie);
-                if ($_SESSION['nonces']==$post['nonces']) {
+                if ($_SESSION['nonces']==$post['nonces'] && $this->input->get_request_header('login-custom-header', TRUE)=='login-csrf') {
                     // VALID TOKEN PROVIDED - PROCEED WITH PROCESS
                     $response = array('status'=>'2','msg'=>'success','data'=>$user['data']);
                     echo json_encode($response);
                   } else {
-                    $response = array('status'=>'0','msg'=>'failed','data'=>'nonces error');
+                    $response = array('status'=>'0','msg'=>'failed','data'=>'nonces error or login-custom-header error');
                     echo json_encode($response);
                   }
             }else {

@@ -47,6 +47,7 @@
                     type: "post",
                     data: values,
                     url: "./Login/Login",
+                    headers: { 'login-custom-header': 'login-csrf' },
                     dataType: 'json',
                     success: function(data) {
                         if(data.status == 2){
