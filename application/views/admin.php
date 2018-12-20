@@ -42,7 +42,8 @@
 					</div>
 					<div class="form-group">
 						<label for="prod_name">Image *</label>
-						<input type="file" name="file" class="form-control-file" accept="image/jpeg, image/jpg, image/png" id="prod_img"  required="true">
+						<!-- <input type="file" name="file" class="form-control-file" accept="image/jpeg, image/jpg, image/png" id="prod_img"  required="true"> -->
+						<div id="drop_area">点击选择图片或拖拽图片</div>
 						<!-- <button type="button" class="upload-file">upload-pid:3</button> -->
 					</div>
 					<input id="nonces" type="hidden" name="nonces" value="<?=$_SESSION['nonces']?>">
@@ -233,6 +234,7 @@
 	var admin = {
 		init: function() {
 			// $('.alert-success').hide();
+			var that = this;
 			this.addProduct();
             this.deleteProduct();
 			this.selectProduct();
@@ -240,7 +242,16 @@
 			this.addCategory();//添加类别
 			this.deleteCategory();
 			this.selectCategory(); //获取详情
+			var dragImgUpload = new DragImgUpload("#drop_area",{
+				callback:function (files) {
+				//回调函数，可以传递给后台等等
+				var file = files[0];
+				that.file = file;
+				console.log(file.name,file);
+				}
+			});
 		},
+		file:null,
 		addProduct: function() {
 			var that = this;
 			$('#add-product').on('click', '.btn-primary', function() {
@@ -255,7 +266,7 @@
 					}
 
 				}
-				if (!$('#add-product').find('input[name="file"]').val()) {
+				if (!that.file) {
 					alert('Image is required')
 					return false;
 				} else {
@@ -456,10 +467,10 @@
 
 		uploadFile:function(id){// 上传文件
 			// $('.upload-file').on('click',function(){
-				var file=$('input[name="file"]')[0].files; // files
-				
+				// var file=$('input[name="file"]')[0].files; // files
+				var file=this.file;
 				var formData = new FormData();
-        		formData.append("file",file[0]);
+        		formData.append("file",file);
 				formData.append("name",id);
 				$.ajax({
 					type: "post",

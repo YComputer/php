@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="./public/css/index.css" rel="stylesheet">
     <script src="./public/js/jquery.min.js"></script>
     <script src="./public/js/bootstrap.min.js"></script>
+    <script src="./public/js/upload.js"></script>
   </head>
   <body>
     <?=$content_for_layout ?> 
